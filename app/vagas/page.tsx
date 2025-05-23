@@ -1,5 +1,29 @@
-import React from "react";
+import JobItem, { Job } from "@/components/cards/job-item";
 
-export default function Vagas() {
-  return <div>Vagas</div>;
+export const dynamic = "force-dynamic";
+
+async function fetchJobs() {
+  const res = await fetch("https://apis.codante.io/api/job-board/jobs");
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch jobs");
+  }
+
+  return res.json();
+}
+
+export default async function Vagas() {
+  const jobsData = await fetchJobs();
+  const jobs: Job[] = jobsData.data;
+
+  return (
+    <main className="">
+      <h2 className="font-display mb-12 text-2xl font-bold">Todas as Vagas</h2>
+      <div className="space-y-8">
+        {jobs.map((job: Job) => (
+          <JobItem key={job.id} job={job} />
+        ))}
+      </div>
+    </main>
+  );
 }
