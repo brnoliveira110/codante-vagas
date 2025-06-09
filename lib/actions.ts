@@ -21,7 +21,7 @@ export async function deleteJob(formData: FormData) {
   redirect("/vagas");
 }
 
-export async function createJob(prevState: unknown, formData: FormData) {
+export async function createJob(formData: FormData) {
   const res = await fetch("https://apis.codante.io/api/job-board/jobs", {
     method: "POST",
     body: formData,
